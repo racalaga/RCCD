@@ -1,17 +1,18 @@
 # RNA CITE Concatenate Decoder
-## introduction 
-RNA CITE seq Concatenate Decoder aggreagte RNA-seq and CITE-seq sequance to reproduce CITE seq sequance
+
+RNA CITE seq Concatenate Decoder aggregates RNA-seq and CITE-seq sequences to reproduce CITE seq sequences.
 ## installlation 
-RCCD is python scrpits
+RCCD is a python script and can be downloaded using the following command:
+
 ```
-git clone https://github.com/wheaton5/souporcell.git
+git clone https://github.com/racalaga/RCCD.git
 ```
-It dependendent follw python packages:
+The following Python packages are required :
 ```
 -scanpy
 -tensorflow
 ```
-if use conda env, install package use conda:
+if use conda env, use conda to install package:
 ```
 conda install -c conda-forge scanpy
 conda install -c conda-forge tensorflow
@@ -19,20 +20,21 @@ conda install -c conda-forge tensorflow
 
 ## To run the script
 
-RCCD script use two csv file **config.csv** and **match.csv**
+The RCCD script uses two csv files, **config.csv** and **match.csv**, for parameter input.
 
 **config.csv**
 ```
 anndata_path,rnacite.h5ad ## input file path
 marker_path,match.csv ## match.csv file path
-threshold_quality,30 ## train set
-rae_epochs,10 ## RNA autoencoder epochs
-pae_epochs,10 ## protein autoencoder epochs
-gen_epochs,10 ## RCCD epochs
+threshold_quality,30 ## Data quality to use for training set
+rae_epochs,10 ## epochs used by RNA autoencoders for training
+pae_epochs,10 ## epochs used by protien autoencoders for training
+gen_epochs,10 ## epochs used by RCCD for training
 save_path,produce.h5ad ## output file path
 ```
 **match.csv**
-it composed RNA-id and protein-id match 
+
+a list of RNA-id and protein-id pairs.
 ```
 CD86,CD86-1
 CD274,CD274-1
@@ -60,13 +62,13 @@ python RCCD.py config.csv
 
 ## input and outputs
 
-input file can be any type **anndata** data <https://anndata.readthedocs.io/en/latest/#>
+input file can be any **anndata** type data <https://anndata.readthedocs.io/en/latest/#>
 ```
 AnnData object with n_obs × n_vars = 104236 × 36776
     var: 'gene_ids', 'feature_types', 'genome'
 ```
 
-output file is saved **save_path** in **config.csv**
+The output file is saved to **save_path** specified in **config.csv**.
 ```
 AnnData object with n_obs × n_vars = 104236 × 28003
     var: 'gene_ids', 'feature_types', 'genome', 'n_counts'
@@ -81,9 +83,20 @@ RCCD save results in anndata.uns :
 - protein_marker, rna_marker: markers pair definded by match.csv
 
 ```
-<img src="./img/rae_train.png  width="200" height="400"/>
-![rae_train](./img/rae_train.png){: width="50" height="50"}
-![pae_train](./img/pae_train.png){: width="50" height="50"}
-![gen_train](./img/gen_train.png){: width="50" height="50"}
+
+The scrpits provide trainig graph of each model
+![rae_train](./img/rae_train.png)
+![pae_train](./img/pae_train.png)
+![gen_train](./img/gen_train.png)
+The scrpits also provide metric score graph as quality 
 ![cos_sim](./img/cos_sim.png)
 ![euclid_distance](./img/euclid_distance.png)
+
+The trained model saved to **RCCD.h5**
+
+## RCCD2
+This script can be run exactly like RCCD.
+```
+python RCCD2.py config.csv
+```
+The difference is that RCCD learns only through RNA-CITE seq pairs defined in match.csv and generates CITE-seq data of the same size, whereas RCCD learns from the entire gene and generates data of the same size as CITE-seq data of input data. 

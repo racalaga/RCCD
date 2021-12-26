@@ -123,7 +123,7 @@ adata.uns["original_protein"] = protein.X
 adata.uns["produced_protein"] = gen.predict([rna[:,rna.uns["rna_marker"]].X,protein.X])
 adata.uns["marker_quality_after"] = qulity_check(rna[:,rna.uns["rna_marker"]].X,adata.uns["produced_protein"])
 adata.write(save_path)
-gen.save("gen.h5")
+gen.save("RCCD.h5")
 
 ####ploting 
 plt.plot(np.sort(adata.uns["marker_quality_before"][0]),label='before quality')

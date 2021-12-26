@@ -124,7 +124,7 @@ adata.uns["produced_protein"] = gen.predict([rna.X,protein.X])
 protein.X = adata.uns["produced_protein"]
 adata.uns["marker_quality_after"] = qulity_check(rna[:,rna.uns["rna_marker"]].X,protein[:,protein.uns["protein_marker"]].X)
 adata.write(save_path)
-gen.save("gen.h5")
+gen.save("RCCD2.h5")
 
 ####ploting
  
