@@ -14,7 +14,9 @@ The following Python packages are required :
 ```
 if use conda env, use conda to install package:
 ```
-conda install -c conda-forge scanpy
+conda install seaborn scikit-learn statsmodels numba pytables
+conda install -c conda-forge python-igraph leidenalg
+pip install scanpy
 conda install -c conda-forge tensorflow
 ```
 
