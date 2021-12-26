@@ -79,7 +79,7 @@ r_encoder = keras.Model(r_input,r_encode)
 rae.compile(optimizer=tf.optimizers.Adam(), loss='mse',metrics=['mse'])
 r_encoder.compile(optimizer=tf.optimizers.Adam(), loss='mse')
 rhist = rae.fit(train_rna,train_rna,validation_data=(val_rna,val_rna), epochs=int(rae_epochs), batch_size=256)
-model_train_plot(rhist,"rae_train2.png")
+model_train_plot(rhist,"rae_train.png")
 
 #protein encoding
 size=train_protein.shape[1]
@@ -98,7 +98,7 @@ p_encoder = keras.Model(p_input,p_encode)
 pae.compile(optimizer=tf.optimizers.Adam(), loss='mse',metrics=['mse'])
 p_encoder.compile(optimizer=tf.optimizers.Adam(), loss='mse')
 phist = pae.fit(train_protein,train_protein,validation_data=(val_protein,val_protein), epochs=int(pae_epochs), batch_size=256)
-model_train_plot(phist,"pae_train2.png")
+model_train_plot(phist,"pae_train.png")
 
 #generator
 in1=r_encoder(r_input)
@@ -116,9 +116,7 @@ r_encoder.trainable = False
 p_encoder.trainable = False
 gen.compile(optimizer=tf.optimizers.Adam(), loss='mse',metrics=['mse'])
 ghist = gen.fit([train_rna,train_protein],train_protein,validation_data=([val_rna,val_protein],val_protein),epochs=int(gen_epochs), batch_size=256)
-model_train_plot(ghist,"gen_train2.png")
-
-
+model_train_plot(ghist,"gen_train.png")
 
 adata.uns["rna"] = rna.X
 adata.uns["original_protein"] = protein.X
@@ -126,17 +124,18 @@ adata.uns["produced_protein"] = gen.predict([rna.X,protein.X])
 protein.X = adata.uns["produced_protein"]
 adata.uns["marker_quality_after"] = qulity_check(rna[:,rna.uns["rna_marker"]].X,protein[:,protein.uns["protein_marker"]].X)
 adata.write(save_path)
-gen.save("gen2.h5")
+gen.save("gen.h5")
+
 ####ploting
  
 plt.plot(np.sort(adata.uns["marker_quality_before"][0]),label='before quality')
 plt.plot(np.sort(adata.uns["marker_quality_after"][0]),label='after quality')
 plt.legend()
-plt.savefig("cos_sim2.png")
+plt.savefig("cos_sim.png")
 plt.close()
 
 plt.plot(np.sort(adata.uns["marker_quality_before"][1]),label='before quality')
 plt.plot(np.sort(adata.uns["marker_quality_after"][1]),label='after quality')
 plt.legend()
-plt.savefig("euclid_distance2.png")
+plt.savefig("euclid_distance.png")
 plt.close()
