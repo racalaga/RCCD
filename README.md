@@ -88,6 +88,7 @@ The scrpits provide trainig graph of each model
 ![rae_train](./img/rae_train.png)
 ![pae_train](./img/pae_train.png)
 ![gen_train](./img/gen_train.png)
+
 The scrpits also provide metric score graph as quality 
 ![cos_sim](./img/cos_sim.png)
 ![euclid_distance](./img/euclid_distance.png)
