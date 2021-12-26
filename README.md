@@ -81,8 +81,8 @@ RCCD save results in anndata.uns :
 - protein_marker, rna_marker: markers pair definded by match.csv
 
 ```
-![rae_train](./img/rae_train.png)
-![pae_train](./img/pae_train.png)
-![gen_train](./img/gen_train.png)
+![rae_train](./img/rae_train.png){: width="50" height="50"}
+![pae_train](./img/pae_train.png){: width="50" height="50"}
+![gen_train](./img/gen_train.png){: width="50" height="50"}
 ![cos_sim](./img/cos_sim.png)
 ![euclid_distance](./img/euclid_distance.png)
